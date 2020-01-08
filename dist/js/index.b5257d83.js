@@ -1,0 +1,1 @@
+"use strict";var write=document.getElementById("write");write.innerHTML="12332166666",document.write("123");var a=1;console.log(a);
