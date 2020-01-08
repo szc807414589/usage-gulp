@@ -24,8 +24,10 @@ const minifyCss = require('gulp-clean-css');//压缩css
 const minifyHtml = require('gulp-htmlmin');//html 压缩
 const minifyImage = require('gulp-imagemin');//图片压缩
 
+const rev = require('gulp-rev');
 const revAll = require('gulp-rev-all');//hash
 const revCollector = require('gulp-rev-collector');//根据rev生成的manifest.json文件中的映射, 去替换文件名称, 也可以替换路径
+
 const revDel = require('gulp-rev-delete-original');//Delete the original file rewritten by gulp-rev-all.
 
 const browserify = require('browserify');
@@ -70,9 +72,13 @@ task('css-build', () => (
 			cascade: false
 		}))
 		.pipe(minifyCss())
-		.pipe(revAll.revision())
+		// .pipe(revAll.revision())
+		.pipe(rev())
 		.pipe(dest(distPath.css))
-		.pipe(revAll.manifestFile())
+		// .pipe(revAll.manifestFile({ merge: true}))
+		.pipe(rev.manifest({
+			merge:true
+		}))
 		.pipe(dest(distPath.css))
 ));
 task('js-build', () => (
@@ -82,9 +88,13 @@ task('js-build', () => (
 			plugins: ['@babel/plugin-transform-runtime']
 		}))
 		.pipe(minifyJS())
-		.pipe(revAll.revision())
+		// .pipe(revAll.revision())
+		.pipe(rev())
 		.pipe(dest(distPath.js))
-		.pipe(revAll.manifestFile())
+		// .pipe(revAll.manifestFile({ merge: true}))
+		.pipe(rev.manifest({
+			merge:true
+		}))
 		.pipe(dest(distPath.js))
 ));
 task('library-build', () => (
@@ -95,9 +105,13 @@ task('library-build', () => (
 task('images-build', () => (
 	src(srcPath.images)
 		// .pipe(minifyImage())
-		.pipe(revAll.revision())
+		// .pipe(revAll.revision())
+		.pipe(rev())
 		.pipe(dest(distPath.images))
-		.pipe(revAll.manifestFile())
+		// .pipe(revAll.manifestFile({ merge: true}))
+		.pipe(rev.manifest({
+			merge:true
+		}))
 		.pipe(dest(distPath.images))
 ))
 ;
@@ -110,11 +124,6 @@ task('html-build', () => (
 		}))
 		.pipe(revCollector({
 			replaceReved: true,
-			dirReplacements: {
-				'css': function(manifest_value) {
-					console.log(manifest_value);
-				}
-			}
 		}))
 		.pipe(minifyHtml({collapseWhitespace: true}))
 		.pipe(dest(distPath.html))
@@ -220,7 +229,7 @@ task('build', series(
 		'js-build',
 		'images-build',
 		'library-build',
-	'css-build',
+		'css-build'
 	),
 	'html-build',
 	// 'clean-manifest'

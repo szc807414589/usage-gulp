@@ -3534,6 +3534,13 @@ fined@^1.0.1:
     object.pick "^1.2.0"
     parse-filepath "^1.0.1"
 
+first-chunk-stream@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npm.taobao.org/first-chunk-stream/download/first-chunk-stream-2.0.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ffirst-chunk-stream%2Fdownload%2Ffirst-chunk-stream-2.0.0.tgz#1bdecdb8e083c0664b91945581577a43a9f31d70"
+  integrity sha1-G97NuOCDwGZLkZRVgVd6Q6nzHXA=
+  dependencies:
+    readable-stream "^2.0.2"
+
 flagged-respawn@^1.0.0:
   version "1.0.1"
   resolved "https://registry.npm.taobao.org/flagged-respawn/download/flagged-respawn-1.0.1.tgz#e7de6f1279ddd9ca9aac8a5971d618606b3aab41"
@@ -4049,6 +4056,20 @@ gulp-rev-delete-original@^0.2.3:
   dependencies:
     rimraf "^2.3.4"
     through2 "^0.6.5"
+
+gulp-rev@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.npm.taobao.org/gulp-rev/download/gulp-rev-9.0.0.tgz#fe51b181c5fbbebfe740b64748d6980827e82878"
+  integrity sha1-/lGxgcX7vr/nQLZHSNaYCCfoKHg=
+  dependencies:
+    modify-filename "^1.1.0"
+    plugin-error "^1.0.1"
+    rev-hash "^2.0.0"
+    rev-path "^2.0.0"
+    sort-keys "^2.0.0"
+    through2 "^2.0.0"
+    vinyl "^2.1.0"
+    vinyl-file "^3.0.0"
 
 gulp-sourcemaps@^2.6.5:
   version "2.6.5"
@@ -5756,6 +5777,11 @@ mkdirp@^0.5.0, mkdirp@~0.5.1:
   dependencies:
     minimist "0.0.8"
 
+modify-filename@^1.0.0, modify-filename@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npm.taobao.org/modify-filename/download/modify-filename-1.1.0.tgz#9a2dec83806fbb2d975f22beec859ca26b393aa1"
+  integrity sha1-mi3sg4Bvuy2XXyK+7IWcoms5OqE=
+
 module-deps@^6.0.0:
   version "6.2.2"
   resolved "https://registry.npm.taobao.org/module-deps/download/module-deps-6.2.2.tgz#d8a15c2265dfc119153c29bb47386987d0ee423b"
@@ -7012,6 +7038,18 @@ reusify@^1.0.0:
   resolved "https://registry.npm.taobao.org/reusify/download/reusify-1.0.4.tgz#90da382b1e126efc02146e90845a88db12925d76"
   integrity sha1-kNo4Kx4SbvwCFG6QhFqI2xKSXXY=
 
+rev-hash@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npm.taobao.org/rev-hash/download/rev-hash-2.0.0.tgz#7720a236ed0c258df3e64bec03ec048b05b924c4"
+  integrity sha1-dyCiNu0MJY3z5kvsA+wEiwW5JMQ=
+
+rev-path@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npm.taobao.org/rev-path/download/rev-path-2.0.0.tgz#10c978e824d76ce7dd1f7e66e88f50f5e71a0a6a"
+  integrity sha1-EMl46CTXbOfdH35m6I9Q9ecaCmo=
+  dependencies:
+    modify-filename "^1.0.0"
+
 rfile@~1.0, rfile@~1.0.0:
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/rfile/download/rfile-1.0.0.tgz#59708cf90ca1e74c54c3cfc5c36fdb9810435261"
@@ -7739,6 +7777,21 @@ strip-ansi@^3.0.0, strip-ansi@^3.0.1:
   dependencies:
     ansi-regex "^2.0.0"
 
+strip-bom-buf@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/strip-bom-buf/download/strip-bom-buf-1.0.0.tgz#1cb45aaf57530f4caf86c7f75179d2c9a51dd572"
+  integrity sha1-HLRar1dTD0yvhsf3UXnSyaUd1XI=
+  dependencies:
+    is-utf8 "^0.2.1"
+
+strip-bom-stream@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npm.taobao.org/strip-bom-stream/download/strip-bom-stream-2.0.0.tgz#f87db5ef2613f6968aa545abfe1ec728b6a829ca"
+  integrity sha1-+H217yYT9paKpUWr/h7HKLaoKco=
+  dependencies:
+    first-chunk-stream "^2.0.0"
+    strip-bom "^2.0.0"
+
 strip-bom-string@1.X:
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/strip-bom-string/download/strip-bom-string-1.0.0.tgz#e5211e9224369fbb81d633a2f00044dc8cedad92"
@@ -8437,6 +8490,17 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
+vinyl-file@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npm.taobao.org/vinyl-file/download/vinyl-file-3.0.0.tgz#b104d9e4409ffa325faadd520642d0a3b488b365"
+  integrity sha1-sQTZ5ECf+jJfqt1SBkLQo7SIs2U=
+  dependencies:
+    graceful-fs "^4.1.2"
+    pify "^2.3.0"
+    strip-bom-buf "^1.0.0"
+    strip-bom-stream "^2.0.0"
+    vinyl "^2.0.1"
+
 vinyl-fs@^3.0.0:
   version "3.0.3"
   resolved "https://registry.npm.taobao.org/vinyl-fs/download/vinyl-fs-3.0.3.tgz#c85849405f67428feabbbd5c5dbdd64f47d31bc7"
@@ -8496,7 +8560,7 @@ vinyl@^0.5.0:
     clone-stats "^0.0.1"
     replace-ext "0.0.1"
 
-vinyl@^2.0.0, vinyl@^2.1.0, vinyl@^2.2.0:
+vinyl@^2.0.0, vinyl@^2.0.1, vinyl@^2.1.0, vinyl@^2.2.0:
   version "2.2.0"
   resolved "https://registry.npm.taobao.org/vinyl/download/vinyl-2.2.0.tgz#d85b07da96e458d25b2ffe19fece9f2caa13ed86"
   integrity sha1-2FsH2pbkWNJbL/4Z/s6fLKoT7YY=
