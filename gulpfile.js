@@ -27,7 +27,7 @@ const revCollector = require('gulp-rev-collector');//根据rev生成的manifest.
 const jeditor = require('gulp-json-editor');
 
 
-const sourcemaps = require('gulp-sourcemaps');
+// const sourcemaps = require('gulp-sourcemaps');
 const baseConfig = require('./gulp.config');
 
 /*html,image,css,js区分prod和dev*/
@@ -42,12 +42,7 @@ task('css-build', () => (
 		.pipe(minifyCss())
 		.pipe(rev())
 		.pipe(dest(baseConfig.buildPath.css))
-		.pipe(rev.manifest(
-			// baseConfig.buildPath.manifest,
-			// {
-			// 	merge: true
-			// }
-		))
+		.pipe(rev.manifest())
 		.pipe(jeditor(function (json) {
 			const newJson = {};
 			for (let key in json){
@@ -66,12 +61,8 @@ task('js-build', () => (
 		.pipe(minifyJS())
 		.pipe(rev())
 		.pipe(dest(baseConfig.buildPath.js))
-		.pipe(rev.manifest(
-			// baseConfig.buildPath.manifest,
-			// {
-			// 	merge: true
-			// }
-		))
+		.pipe(rev.manifest())
+
 		.pipe(dest(baseConfig.buildPath.js))
 ));
 task('images-build', () => (
@@ -79,12 +70,7 @@ task('images-build', () => (
 		.pipe(minifyImage())
 		.pipe(rev())
 		.pipe(dest(baseConfig.buildPath.images))
-		.pipe(rev.manifest(
-			// baseConfig.buildPath.manifest,
-			// {
-			// 	merge: true
-			// }
-		))
+		.pipe(rev.manifest())
 		.pipe(dest(baseConfig.buildPath.images))
 ));
 task('html-build', () => (
@@ -208,10 +194,7 @@ task('build', series(
 		'images-build',
 		'css-build'
 	),
-	'html-build'
-	// 'clean-manifest-build'
+	'html-build',
+	'clean-manifest-build'
 ));
 
-// task('init', series('clean', parallel('html', 'less', 'js', 'images')));
-// task('default', series('init', 'server', 'watcher'));
-// task('build', series('init', 'build'));
