@@ -26,11 +26,12 @@ const baseConfig = {
 	buildPath: {
 		root: basePaths + 'build',
 		html: basePaths + 'build',
-		css: basePaths + 'build/css/',
-		js: basePaths + 'build/js/',
+		css: basePaths + 'build/css',
+		js: basePaths + 'build/js',
 		images: basePaths + 'build/img',
 		manifest: 'build/**/*.json',
-		manifestPath: './'
+		manifestPath: 'build/rev-manifest.json',
+		manifestBase:'build',
 	},
 	autoPreFixerConfig: {
 		overrideBrowserslist: ['last 2 version']

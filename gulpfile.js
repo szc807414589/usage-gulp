@@ -42,7 +42,13 @@ task('css-build', () => (
 		.pipe(minifyCss())
 		.pipe(rev())
 		.pipe(dest(baseConfig.buildPath.css))
-		.pipe(rev.manifest())
+		.pipe(rev.manifest(
+			baseConfig.buildPath.manifestPath,
+			{
+				base: baseConfig.buildPath.manifestBase,
+				merge: true
+			}
+		))
 		.pipe(jeditor(function (json) {
 			const newJson = {};
 			for (let key in json){
@@ -50,7 +56,7 @@ task('css-build', () => (
 			}
 			return newJson;
 		}))
-		.pipe(dest(baseConfig.buildPath.css))
+		.pipe(dest(baseConfig.buildPath.manifestBase))
 ));
 task('js-build', () => (
 	src(baseConfig.srcPath.js)
@@ -61,20 +67,31 @@ task('js-build', () => (
 		.pipe(minifyJS())
 		.pipe(rev())
 		.pipe(dest(baseConfig.buildPath.js))
-		.pipe(rev.manifest())
-
-		.pipe(dest(baseConfig.buildPath.js))
+		.pipe(rev.manifest(
+			baseConfig.buildPath.manifestPath,
+			{
+				base: baseConfig.buildPath.manifestBase,
+				merge: true
+			}
+		))
+		.pipe(dest(baseConfig.buildPath.manifestBase))
 ));
 task('images-build', () => (
 	src(baseConfig.srcPath.images)
 		.pipe(minifyImage())
 		.pipe(rev())
 		.pipe(dest(baseConfig.buildPath.images))
-		.pipe(rev.manifest())
-		.pipe(dest(baseConfig.buildPath.images))
+		.pipe(rev.manifest(
+			baseConfig.buildPath.manifestPath,
+			{
+				base: baseConfig.buildPath.manifestBase,
+				merge: true
+			}
+		))
+		.pipe(dest(baseConfig.buildPath.manifestBase))
 ));
 task('html-build', () => (
-	src([baseConfig.buildPath.manifest, baseConfig.srcPath.html])
+	src([baseConfig.buildPath.manifestPath, baseConfig.srcPath.html])
 		.pipe(fileInclude({
 			prefix: '@@',//变量前缀 @@include
 			basepath: './src/include',//引用文件路径
@@ -189,12 +206,12 @@ task('dev', series(
 ));
 task('build', series(
 	'clean-build',
-	parallel(
+	series(
+		'css-build',
 		'js-build',
 		'images-build',
-		'css-build'
 	),
 	'html-build',
-	'clean-manifest-build'
+	// 'clean-manifest-build'
 ));
 
