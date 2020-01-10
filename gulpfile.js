@@ -22,10 +22,9 @@ const minifyHtml = require('gulp-htmlmin');//html 压缩
 const minifyImage = require('gulp-imagemin');//图片压缩
 
 const rev = require('gulp-rev');
-// const revAll = require('gulp-rev-all');//hash
 const revCollector = require('gulp-rev-collector');//根据rev生成的manifest.json文件中的映射, 去替换文件名称, 也可以替换路径
-const jeditor = require('gulp-json-editor');
-
+const jEditor = require('gulp-json-editor');
+const cheerio = require('gulp-cheerio');//allows you to manipulate HTML and XML files using cheerio.
 
 // const sourcemaps = require('gulp-sourcemaps');
 const baseConfig = require('./gulp.config');
@@ -49,7 +48,7 @@ task('css-build', () => (
 				merge: true
 			}
 		))
-		.pipe(jeditor(function (json) {
+		.pipe(jEditor(function (json) {
 			const newJson = {};
 			for (let key in json){
 				newJson[key.split('.css')[0] + '.less'] = json[key];
@@ -110,19 +109,6 @@ task('css-dev', () => (
 			maxWeightResource: 8 * 1024
 		}))
 		.pipe(less())
-		.pipe(autoPreFixer(baseConfig.autoPreFixerConfig))
-		.pipe(rev())
-		.pipe(dest(baseConfig.distPath.css))
-		.pipe(rev.manifest({
-			merge: true
-		}))
-		.pipe(jeditor(function (json) {
-			const newJson = {};
-			for (let key in json){
-				newJson[key.split('.css')[0] + '.less'] = json[key];
-			}
-			return newJson;
-		}))
 		.pipe(dest(baseConfig.distPath.css))
 		.pipe(connect.reload())
 ));
@@ -133,34 +119,26 @@ task('js-dev', () => (
 			plugins: ['@babel/plugin-transform-runtime']
 		}))
 		.pipe(minifyJS())
-		.pipe(rev())
-		.pipe(dest(baseConfig.distPath.js))
-		.pipe(rev.manifest({
-			merge: true
-		}))
 		.pipe(dest(baseConfig.distPath.js))
 		.pipe(connect.reload())
 ));
 task('images-dev', () => (
 	src(baseConfig.srcPath.images)
-		.pipe(rev())
-		.pipe(dest(baseConfig.distPath.images))
-		.pipe(rev.manifest({
-			merge: true
-		}))
 		.pipe(dest(baseConfig.distPath.images))
 		.pipe(connect.reload())
 ));
 task('html-dev', () => {
 	return (
-		src([baseConfig.distPath.manifest, baseConfig.srcPath.html])
+		src([baseConfig.srcPath.html])
 			.pipe(fileInclude({
 				prefix: '@@',//变量前缀 @@include
 				basepath: './src/include',//引用文件路径
 				indent: true//保留文件的缩进
 			}))
-			.pipe(revCollector({
-				replaceReved: true
+			.pipe(cheerio($ => {
+				$('link').each((i, v) => {
+					$(v).attr('href', $(v).attr('href').replace('.less', '.css'));
+				});
 			}))
 			.pipe(minifyHtml({collapseWhitespace: true}))
 			.pipe(dest(baseConfig.distPath.html))
@@ -180,9 +158,6 @@ task('server', done => {
 //清除dist
 task('clean-build', () => del([baseConfig.buildPath.root]));
 task('clean-dev', () => del([baseConfig.distPath.root]));
-//清除manifest
-task('clean-manifest-build', () => del([baseConfig.buildPath.manifest]));
-task('clean-manifest-dev', () => del([baseConfig.distPath.manifest]));
 
 /*监听文件*/
 task('watcher', done => {
@@ -195,7 +170,7 @@ task('watcher', done => {
 
 task('dev', series(
 	'clean-dev',
-	parallel(
+	series(
 		'js-dev',
 		'css-dev',
 		'images-dev'
@@ -209,9 +184,8 @@ task('build', series(
 	series(
 		'css-build',
 		'js-build',
-		'images-build',
+		'images-build'
 	),
-	'html-build',
-	// 'clean-manifest-build'
+	'html-build'
 ));
 

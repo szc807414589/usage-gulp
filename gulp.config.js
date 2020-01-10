@@ -13,7 +13,8 @@ const baseConfig = {
 		css: basePaths + 'dist/css/',
 		js: basePaths + 'dist/js/',
 		images: basePaths + 'dist/img',
-		manifest: 'dist/**/*.json'
+		manifestPath: 'dist/rev-manifest.json',
+		manifestBase:'dist',
 	},
 	pathsTest: {
 		root: basePaths + '/dist_test',
@@ -29,7 +30,6 @@ const baseConfig = {
 		css: basePaths + 'build/css',
 		js: basePaths + 'build/js',
 		images: basePaths + 'build/img',
-		manifest: 'build/**/*.json',
 		manifestPath: 'build/rev-manifest.json',
 		manifestBase:'build',
 	},
